@@ -1,0 +1,83 @@
+﻿@model List<Lab06.Models.DataAccess.AcademicRecord>
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Academic Records</h4>
+
+
+        @*<form asp-action="Edit" method="post">*@
+            @using(Html.BeginForm("Edit", "AcademicRecord", FormMethod.Post)){
+             <table class="table">
+                         <thead>
+                            <tr>
+                                <th>
+                                    <a  asp-route-orderby="code" style="text-decoration:none;"><label>Course</label></a>
+                                </th>
+                                <th>
+                                    <a  asp-route-orderby="title" style="text-decoration:none;"><label>Student</label></a> 
+                                </th>
+                                <th>
+                                 Grade
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @*items not binding when sent to action method *@
+                            @*@using(Html.BeginForm())*@
+                            
+                                @for(int i=0; i< Model.Count;i++)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.HiddenFor(model => model[i].CourseCode)
+                                            @Html.DisplayFor(model => model[i].CourseCodeNavigation.Code) - @Html.DisplayFor(model => model[i].CourseCodeNavigation.Title)
+                                        </td>
+                                        <td>
+                                             @Html.HiddenFor(model => model[i].StudentId)
+                                             @Html.DisplayFor(model => model[i].Student.Id) -  @Html.DisplayFor(model => model[i].Student.Name)
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model[i].Grade)
+                                        </td>
+                                    </tr>
+                                    
+                                }
+                                @*<input type="submit" value="Submit"/>*@
+                            
+
+
+@*                            @foreach (var item in Model) {
+                                    <tr>
+                                        <td>
+                                             <input type="hidden" asp-for="@item.CourseCodeNavigation.Code">
+                                            @Html.DisplayFor(modelItem => item.CourseCodeNavigation.Code) - @Html.DisplayFor(modelItem => item.CourseCodeNavigation.Title)
+                                        </td>
+                                        <td>
+                                            <input type="hidden" asp-for="@item.Student.Id">
+                                            @Html.DisplayFor(modelItem => item.Student.Id) -  @Html.DisplayFor(modelItem => item.Student.Name)
+                                        </td>
+                                        <td>
+                                            <input type="text" style="width:40px;" asp-for="@item.Grade"  value="@item.Grade"/>
+                                        </td>
+                                    </tr>
+                            }*@
+                        </tbody>
+             </table>
+             
+              <div class="row">
+                  <div class="col-md-5" id="btnElements">
+                       <button type="submit" asp-action="Edit" method="post" class="btn btn-primary">Save</button>
+                       <a asp-action="Index" id="btnCancel">Cancel</a>
+                  </div>
+              </div> 
+             }
+
+        @*</form>*@
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
